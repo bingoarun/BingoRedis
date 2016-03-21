@@ -7,11 +7,14 @@ class BingoDataHandler:
         self.convertToDict()
 
     def convertToDict(self):
-        self.mydict={}
-        for i in self.myfile:
-            i=i.rstrip().split('\t')
-            self.mydict[i[0]]=i[1]
-        print self.mydict
+        try:
+            self.mydict={}
+            for i in self.myfile:
+                i=i.rstrip().split('\t')
+                self.mydict[i[0]]=i[1]
+            print self.mydict
+        except:
+            print "Some Error"
 
 
     def getData(self,mykey):

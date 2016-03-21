@@ -1,8 +1,9 @@
+import re
 from BingoSocket import BingoSocket
 from BingoDataHandler import BingoDataHandler
 
 HOST=''
-PORT=1234
+PORT=12345
 FILE='file/data'
 
 mySocket=BingoSocket(HOST,PORT)
@@ -22,20 +23,26 @@ while True:
     data = conn.recv(1024)
 
     # PROCESS DATA
-    tokens = data.split(' ',3)
-    command = tokens[0]
-    if command=='GET':
-        reply = myDataHandler.getData(tokens[1])+'\n'
-    elif command=='PUT':
-        stored_data = myDataHandler.putData(tokens[1],tokens[2])
-        reply = 'OK\n'
-    elif command.rstrip()=='QUIT':
-        myDataHandler.writeToFile()
-        conn.send('Quit')
-        break
-    else:
-        reply = 'Unknown command: '+command
+    tokens = re.findall(r'\S+', data)
+    if len(tokens)>0:
+        print 'len:',len(tokens)
+        command = tokens[0]
+        if command=='GET' and len(tokens)>1:
+            reply = myDataHandler.getData(tokens[1])+'\n'
+        elif command=='PUT' and len(tokens)>2:
+            stored_data = myDataHandler.putData(tokens[1],tokens[2])
+            reply = 'OK\n'
+        elif command.rstrip()=='QUIT':
+            myDataHandler.writeToFile()
+            conn.send('Quit\n')
+            break
+        else:
+            reply = 'Unknown command\n'
+        conn.send(reply)
 
-    # SEND REPLY
-    conn.send(reply)
+    else:
+        reply="Unknown command\n"
+        # SEND REPLY
+        conn.send(reply)
+
 conn.close() # When we are out of the loop, we're done, close
