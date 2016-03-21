@@ -25,7 +25,6 @@ while True:
     # PROCESS DATA
     tokens = re.findall(r'\S+', data)
     if len(tokens)>0:
-        print 'len:',len(tokens)
         command = tokens[0]
         if command=='GET' and len(tokens)>1:
             reply = myDataHandler.getData(tokens[1])+'\n'
