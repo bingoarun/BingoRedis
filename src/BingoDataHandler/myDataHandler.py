@@ -25,7 +25,10 @@ class BingoDataHandler:
                 return i[1]
         return "No data found"
         '''
-        return self.mydict[mykey.rstrip()]
+        try:
+            return self.mydict[mykey.rstrip()]
+        except KeyError,e:
+            return "No value found for this key\n"
 
     def putData(self,mykey,myvalue):
         self.mydict[mykey]=myvalue
