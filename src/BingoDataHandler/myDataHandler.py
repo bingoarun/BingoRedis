@@ -3,7 +3,7 @@ class BingoDataHandler:
     myfile = ''
     mydict = {}
     def __init__(self,myfile):
-        self.myfile=open(myfile,"r+")
+        self.myfile=open(myfile,"ab+")
         self.convertToDict()
 
     def convertToDict(self):

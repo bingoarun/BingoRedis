@@ -1,14 +1,18 @@
 from BingoSocket import BingoSocket
 from BingoDataHandler import BingoDataHandler
 
-mySocket=BingoSocket('',12345)
+HOST=''
+PORT=1234
+FILE='file/data'
+
+mySocket=BingoSocket(HOST,PORT)
 newSocket = mySocket.createSocket()
 newSocket.listen(1)
 print 'Socket is now listening'
 (conn, addr) = newSocket.accept()
 
-myfile='/tmp/testdict'
-myDataHandler = BingoDataHandler(myfile)
+
+myDataHandler = BingoDataHandler(FILE)
 
 print 'Connected with ' + addr[0] + ':' + str(addr[1])
 
